@@ -24,7 +24,8 @@ async function savetoLocal(event) {
     }
     try {
         await axios.post("http://localhost:3000/admin/add-expense", obj).then(response => {
-            showMeUser(response.data);
+            console.log('***12344*****', response);
+            showMeUser(response.data.newExpenseDetail);
         })
     }
     catch (err) {
@@ -55,6 +56,7 @@ function showMeUser(obj) {
 
 
     const parentNode = document.getElementById('listofUsers');
+    console.log('***123**', obj);
     const childNode = `<li class="items" id=${obj.id}> ₹${obj.amount} - ${obj.detail}
         <button onclick="deleteUser('${obj.id}')"> Delete expense </button>
         <button onclick="editUser('${obj.detail}','${obj.amount}','${obj.category}','${obj.id}')"> Edit </button>
@@ -94,7 +96,7 @@ async function editUser(emai, user, cate, userId) {
     document.getElementById('details').value = emai;
     document.getElementById('amount').value = user;
     document.getElementById('category').value = cate;
-    //deleteUser(userId);
+    deleteUser(userId);
     removeFromScreen(userId);
     var editObj = {
         id: userId,
@@ -106,7 +108,7 @@ async function editUser(emai, user, cate, userId) {
         await axios.put(`http://localhost:3000/admin/edit-expense/${userId}`, editObj)
             .then((response) => {
                 //removeFromScreen(userId);
-                //deleteUser(userId);
+                deleteUser(userId);
                 console.log('edited', response);
             })
     }
