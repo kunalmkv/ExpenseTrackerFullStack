@@ -9,4 +9,5 @@ const router = express.Router();
 router.post('/add-expense', adminController.postAddExp);
 router.get('/get-expense', adminController.getExpense);
 router.delete('/delete-expense/:id', adminController.deleteExpense);
+router.put('/edit-expense/:id', adminController.editExpense);
 module.exports = router;

@@ -47,3 +47,28 @@ exports.deleteExpense = async (req, res, next) => {
         })
     }
 }
+
+exports.editExpense = async (req, res, next) => {
+    try {
+        if (!req.params.id) {
+            console.log('ID is missing');
+            return res.status(400).json({ err: 'ID is missing' });
+        }
+        const uId = req.params.id;
+        const updatedAmount = req.body.amount;
+        const updatedDetail = req.body.detail;
+        const updatedCategory = req.body.category;
+        data = await userWallet.findByPk(uId).then(userWall => {
+            userWall.amount = updatedAmount;
+            userWall.detail = updatedDetail;
+            userWall.category = updatedCategory;
+            return userWall.save();
+        })
+        res.status(201).json({ newExpenseDetail: data });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
+    }
+}

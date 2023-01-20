@@ -82,12 +82,37 @@ async function deleteUser(userId) {
         })
 
 }*/
-function editUser(emai, user, cate, userId) {
+/*function editUser(emai, user, cate, userId) {
     document.getElementById('details').value = emai;
     document.getElementById('amount').value = user;
     document.getElementById('category').value = cate;
     deleteUser(userId);
     removeFromScreen(userId);
+
+}*/
+async function editUser(emai, user, cate, userId) {
+    document.getElementById('details').value = emai;
+    document.getElementById('amount').value = user;
+    document.getElementById('category').value = cate;
+    //deleteUser(userId);
+    removeFromScreen(userId);
+    var editObj = {
+        id: userId,
+        amount: user,
+        detail: emai,
+        category: cate
+    }
+    try {
+        await axios.put(`http://localhost:3000/admin/edit-expense/${userId}`, editObj)
+            .then((response) => {
+                //removeFromScreen(userId);
+                //deleteUser(userId);
+                console.log('edited', response);
+            })
+    }
+    catch (err) {
+        console.log(err);
+    }
 
 }
 function removeFromScreen(userId) {
